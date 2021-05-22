@@ -14,19 +14,19 @@ ubuntu:18.04
 Mysql:5.7.33  
 
 2.运行前准备  
-//建立db  
+// 建立db  
 `create database yourdb;`  
 
 // 创建user表  
-`USE yourdb;
-CREATE TABLE user(
+`USE yourdb;`
+`CREATE TABLE user(
     username char(50) NULL,
     passwd char(50) NULL
 )ENGINE=InnoDB;`  
 
 
 
-//修改main.cpp文件中对应的信息,数据库登录名,密码,库名，修改为你主机上mysql的用户名和密码，以下为范例：  
+// 修改main.cpp文件中对应的信息,数据库登录名,密码,库名，修改为你主机上mysql的用户名和密码，以下为范例：  
 `string username = "username";`  
 `string passwd = "passwd";`  
 `string dbname = "dbname";`    
@@ -36,9 +36,22 @@ CREATE TABLE user(
 ` ./server 9907`   //9907为示例端口 
 
 4.webbench压力测试
-
+在开启日志的情况下对服务器进行压力测试，可实现上万的并发连接，以下为测试结果。因为是在虚拟机里测试，webbench本身也要创建进程消耗资源，当并发数达到10000时失败，但是在Ubuntu主机上测试可达到几万的并发连接。
+* Proactor, ET, 8000QPS
+![webbench](https://github.com/wind-flower435/linux-c-web-server-/blob/master/test_pressure/webbench.png)
 
 4.演示图片  
-![welcome](https://user-images.githubusercontent.com/79500699/114193993-a0a60d80-9981-11eb-9844-bb4b9172d105.png)  
+* 欢迎界面
+![welcome](https://github.com/wind-flower435/linux-c-web-server-/blob/master/resources/web.gif)
 
-![select](https://user-images.githubusercontent.com/79500699/114194127-c3382680-9981-11eb-8827-4d4863f4a086.png)
+* 注册演示
+![register](https://github.com/wind-flower435/linux-c-web-server-/blob/master/resources/register.gif)
+
+* 登录演示
+![register](https://github.com/wind-flower435/linux-c-web-server-/blob/master/resources/login.gif)
+
+* 视频演示
+![register](https://github.com/wind-flower435/linux-c-web-server-/blob/master/resources/video.gif)
+
+---
+* 求个star!
