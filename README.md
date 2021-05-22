@@ -1,6 +1,4 @@
 
-
-
 # linux c++ tiny web server
 
 * 该项目使用 **线程池** + **非阻塞socket** + **epoll(ET)** 的技术实现。
@@ -37,7 +35,7 @@ Mysql:5.7.33
 
 4.webbench压力测试
 
-在开启日志的情况下对服务器进行压力测试，可实现上万的并发连接，以下为测试结果。因为是在虚拟机里测试，webbench本身也要创建进程消耗资源，当并发数达到10000时失败，但是在Ubuntu主机上测试可达到几万的并发连接。
+在**开启日志**的情况下对服务器进行压力测试，可实现上万的并发连接，以下为测试结果。因为是在虚拟机里测试，webbench本身也要创建进程消耗资源，当并发数达到10000时失败，但是在Ubuntu主机上测试可达到几万的并发连接。
 * Proactor, ET, 8000QPS
 ![webbench](https://github.com/wind-flower435/linux-c-web-server-/blob/master/test_pressure/webbench.png)
 
