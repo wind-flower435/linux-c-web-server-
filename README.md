@@ -36,11 +36,12 @@ Mysql:5.7.33
 ` ./server 9907`   //9907为示例端口 
 
 4.webbench压力测试
+
 在开启日志的情况下对服务器进行压力测试，可实现上万的并发连接，以下为测试结果。因为是在虚拟机里测试，webbench本身也要创建进程消耗资源，当并发数达到10000时失败，但是在Ubuntu主机上测试可达到几万的并发连接。
 * Proactor, ET, 8000QPS
 ![webbench](https://github.com/wind-flower435/linux-c-web-server-/blob/master/test_pressure/webbench.png)
 
-4.演示图片  
+5.演示图片  
 * 欢迎界面
 ![welcome](https://github.com/wind-flower435/linux-c-web-server-/blob/master/resources/web.gif)
 
