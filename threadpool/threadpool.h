@@ -2,39 +2,45 @@
 #define THREADPOOL_H
 
 #include <queue>
-//#include <cstdio>
 #include <exception>
 #include <thread>
 #include <condition_variable>
 #include<iostream>
 #include<functional>
-#include"../http_conn/http_conn.h"
-
+#include<unistd.h>
 using namespace std;
 
 
+
 class threadpool
-{private:
-  int m_thread_number;
-  //int m_max_requests;
-  std::vector<std::thread> m_pool;
+{
+private:
+  int min_num;
+  int max_num;
+  int live_num;
+  int busy_num;
+  int default_step;
+  int init_num;
+  int wait_exit_num;
+  int default_time;
+  std::thread arrange; 
   queue<function<void()> >m_workqueue;
   std::mutex m_mutex;
   std::mutex m_queuelock;
   std::condition_variable cv;
   bool m_stop;
 public:
-  threadpool(int _m_thread_number):m_thread_number(_m_thread_number),m_stop(false)
+  threadpool(int _init_num,int _default_step, int _default_time):
+  init_num(_init_num),min_num(_init_num),max_num(20),live_num(_init_num),
+  busy_num(0),default_step(_default_step),wait_exit_num(0),default_time(_default_time), m_stop(false)
   {
-    for(int i=0;i<m_thread_number;i++)
+    for(int i=0;i<init_num;i++)
     {
-      //m_pool.push_back(thread(&threadpool::worker,this));
-      m_pool.emplace_back(move(thread(&threadpool::worker,this)));
-      m_pool.at(i).detach();
+      thread(&threadpool::worker,this).detach();
     }
   }
 
-  ~threadpool()
+   ~threadpool()
   {
     {
       lock_guard<mutex>lk(m_mutex);
@@ -43,69 +49,81 @@ public:
     cv.notify_all();
   }
 
-  // void worker()
-  // {
-  //   while (!m_stop)
-  //   {
-  //     unique_lock<mutex>lk(m_queuelock);
-  //     if(m_workqueue.empty())
-  //     {
-  //       cv.wait(lk);
-  //       //continue;
-  //     }
-  //     if(!m_workqueue.empty())
-  //     {
-  //       http_conn* request=move(m_workqueue.front());
-  //       m_workqueue.pop();
-  //       lk.unlock();
-  //       request->process();
-  //       lk.lock();
-  //     }    
-  //   }  
-  // }
+  bool open_arrange_threads()
+  {
+    arrange=thread(&threadpool::arrange_threads,this);
+    arrange.detach();    
+  }
+
+  void arrange_threads()
+  {
+    while(!m_stop)
+    {
+      this_thread::sleep_for(chrono::milliseconds(default_time*1000));
+      if(m_workqueue.size()>min_num && live_num<max_num)
+        create_new_threads();
+      else if(busy_num*2 < live_num && live_num>min_num)
+        destory_threads();
+    }    
+  }
+
+  void create_new_threads()
+  {
+    for(int i=0;i<default_step;i++)
+    {
+      thread(&threadpool::worker,this).detach();
+      ++live_num;
+    }
+  }
+
+  void destory_threads()
+  {
+    wait_exit_num=default_step;
+    for(int i=0;i<default_step;i++)
+    {      
+      cv.notify_one();
+    }
+    wait_exit_num=0;
+  }
+
   void worker()
   {
     unique_lock<mutex>lk(m_queuelock);
     while (!m_stop)
-    {
-      
+    {      
       if(m_workqueue.empty())
       {
         cv.wait(lk);
       }
+      if(wait_exit_num>0)
+      {
+        --wait_exit_num;
+        --live_num;
+        break;
+      }
       if(!m_workqueue.empty())
       {
+        ++busy_num;
         function<void()>task=move(m_workqueue.front());
         m_workqueue.pop();
         lk.unlock();
         task();
         lk.lock();
+        --busy_num;
       }    
     }
   }
-  // bool append(http_conn* request)
-  // {
-  //   //lock_guard<mutex>lk(m_mutex);
-  //   unique_lock<mutex>lk(m_mutex);
-  //   if(m_workqueue.size()>=m_max_requests)
-  //   {/*cv.wait(lk);*/return false;}
-  //   m_workqueue.push(request);
-  //   cv.notify_one();
-  //   return true;
-  // }
+
   template<typename T>
   bool append(T&& request)
   {
     unique_lock<mutex>lk(m_mutex);
-    //if(m_workqueue.size()>=m_max_requests)
-    //{return false;}
     m_workqueue.emplace(forward<T>(request));
     cv.notify_one();
     return true;
   }
+
+
 };
-
-
-
 
 #endif

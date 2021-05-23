@@ -71,11 +71,11 @@ int main(int argc,char* argv[])
     setpipeignore();
     bool timeout(false); 
         
-    //create threadpool object
-    threadpool pool(8);
+    //create threadpool object    
     unordered_map<int,http_conn>user;  
-    
-    
+    threadpool pool(8,2,3);//init threads,default_step,default_time
+    pool.open_arrange_threads();
+
     while(1)
     {
         int number = epoll_wait(epollfd, events, MAX_EVENT_NUMBER, -1);
