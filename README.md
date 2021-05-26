@@ -5,6 +5,8 @@
 * 实现**异步日志系统**，记录服务器运行状态。
 * 可以访问服务器数据库，实现web端用户注册、登录功能，可以请求服务器图片和视频文件，请求开启摄像头。
 * 经过Webbench测试可以实现**上万的并发连接**数据交换
+
+![pic1](https://github.com/wind-flower435/linux-c-web-server-/blob/master/resources/diagram.png)
 #### 运行
 
 1.环境  
