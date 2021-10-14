@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-26 11:43:56
- * @LastEditTime: 2021-10-14 19:58:09
+ * @LastEditTime: 2021-10-14 20:00:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \undefinedd:\http_git\linux-c-web-server-\README.md
@@ -42,13 +42,9 @@ Mysql:5.7.33
 3.运行  
 ~~`make`~~   
 `mkdir build`
-
 `cd build`
-
 `cmake ..`
-
 `make`
-
 `./server 9907`   //9907为示例端口 
 
 4.webbench压力测试
