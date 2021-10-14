@@ -1,4 +1,12 @@
-
+<!--
+ * @Author: your name
+ * @Date: 2021-05-26 11:43:56
+ * @LastEditTime: 2021-10-14 19:26:59
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \undefinedd:\http_git\linux-c-web-server-\README.md
+-->
+![avatar](https://img.shields.io/badge/2.1-use%20cmake%20build-brightgreen)
 # linux c++ tiny web server
 
 * 该项目使用 **线程池** + **非阻塞socket** + **epoll(ET)** 的技术实现。
@@ -32,7 +40,11 @@ Mysql:5.7.33
 `string dbname = "dbname";`    
 
 3.运行  
-` make`   
+~~` make`~~   
+` mkdir build`
+` cd build`
+`cmake ..`
+`make`
 ` ./server 9907`   //9907为示例端口 
 
 4.webbench压力测试
