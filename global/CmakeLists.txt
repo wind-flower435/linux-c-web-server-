@@ -5,5 +5,5 @@ add_library(sub_global::global ALIAS ${PROJECT_NAME})
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC 
-        ${CMAKE_PROJECT_NAME}/misc
+        ${CMAKE_SOURCE_DIR}/misc
 )
