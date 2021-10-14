@@ -1,8 +1,8 @@
 #ifndef HTML_PARSE_H
 #define HTML_PARSE_H
-#include"../misc/headers.h"
-#include"../log/log.h"
-#include"../database/database.h"
+#include"headers.h"
+#include"log.h"
+#include"database.h"
 
 #include<unordered_set>
 

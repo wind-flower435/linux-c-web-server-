@@ -1,8 +1,8 @@
 #ifndef TIMER1_H
 #define TIMER1_H
 
-#include"../misc/headers.h"
-#include"../log/log.h"
+#include"headers.h"
+#include"log.h"
 
 class node
 {

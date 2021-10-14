@@ -1,0 +1,9 @@
+project(sub_log)
+
+add_library(${PROJECT_NAME} log.cpp)
+add_library(sub_log::log ALIAS ${PROJECT_NAME})
+
+target_include_directories(${PROJECT_NAME}
+    PUBLIC 
+        ${CMAKE_PROJECT_NAME}/misc
+)

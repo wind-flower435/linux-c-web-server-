@@ -1,8 +1,8 @@
 #ifndef HTTP_CONN_H
 #define HTTP_CONN_H
-#include"../misc/headers.h"
-#include"../html_parse/html_parse.h"
-#include"../log/log.h"
+#include"headers.h"
+#include"html_parse.h"
+#include"log.h"
 /**************************************
   bool read_once();
   void process_read();

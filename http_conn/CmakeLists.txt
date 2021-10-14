@@ -1,0 +1,17 @@
+project(sub_html_conn)
+
+add_library(${PROJECT_NAME} html_conn.cpp)
+add_library(sub_html_conn::html_conn ALIAS ${PROJECT_NAME})
+
+target_include_directories(${PROJECT_NAME}
+    PUBLIC 
+        ${CMAKE_PROJECT_NAME}/misc
+        ${CMAKE_PROJECT_NAME}/html_parse
+        ${CMAKE_PROJECT_NAME}/log
+)
+
+target_link_libraries( ${PROJECT_NAME}
+    PRIVATE 
+        sub_database::html_parse
+        sub_log::log
+)
